@@ -1,10 +1,8 @@
 <?php
-$user = 'chmscams';
-$pass = 'p@33w0rd';
-$con = new PDO('mysql:host=43.255.154.56;dbname=chmscams', $user, $pass);
+include('./includes/con_local.php');
 extract($_POST);
 
-$selectUser = $con->query("SELECT * FROM test WHERE username = $username AND password = $password");
-$user = $selectUser->fetch(PDO::FETCH_ASSOC);
+$selectUser = $con->query("SELECT * FROM users WHERE username = '$username' AND password = '$password'");
+$userCred = $selectUser->fetch(PDO::FETCH_ASSOC);
 
-echo json_encode($user);
+echo json_encode($userCred);
