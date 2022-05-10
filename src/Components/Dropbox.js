@@ -60,7 +60,7 @@ function Dropbox() {
     formData.append("areaNum", _areaNum);
     formData.append("parameter", _parameter);
     axios
-      .post(`${window.location.hostname}/api/upload.php`, formData, {
+      .post(`http://ams.chmsc.edu.ph/api/upload.php`, formData, {
         headers: {
           "Content-Type": "multipart/form-data",
         },

@@ -20,7 +20,7 @@ function UploadedPDF({ handleModalOpen }) {
   const [dates, setDates] = useState([]);
   const [rows, setRows] = useState([]);
   const refresh = () => {
-    axios.get(`${window.location.hostname}/api/listUpload.php`).then((res) => {
+    axios.get(`http://ams.chmsc.edu.ph/api/listUpload.php`).then((res) => {
       setDates(res.data[0]);
       setRows(res.data[1]);
     });
