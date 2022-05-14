@@ -1,4 +1,5 @@
 import React, { useState, useContext } from "react";
+import { useCookies } from "react-cookie";
 import { FileUploader } from "react-drag-drop-files";
 import axios from "axios";
 import DialogTitle from "@mui/material/DialogTitle";
@@ -15,7 +16,6 @@ import {
   Grid,
   Button,
   Chip,
-  Typography,
 } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
 import { Context } from "./../Context";
@@ -26,12 +26,14 @@ import { orange, blue } from "@mui/material/colors";
 import paramJSON from "./../json/parameters.json";
 function Dropbox() {
   const { actions, file, isDropboxOpen } = useContext(Context);
+  const [cookies] = useCookies(["username"]);
   const [_file, setFile] = useState(null);
   const [seeFiles, setSeeFiles] = useState(false);
   const [_program, setProgram] = useState("");
   const [_areaNum, setAreaNum] = useState("");
   const [_parameter, setParameter] = useState("");
   const [isModalOpen, setModalOpen] = useState(false);
+
   const [isUpdateSuccess, setUpdateSuccess] = useState(false);
   const [isUpdateFailed, setUpdateFailed] = useState(false);
   const handleModalOpen = () => {
@@ -59,6 +61,7 @@ function Dropbox() {
     formData.append("program", _program);
     formData.append("areaNum", _areaNum);
     formData.append("parameter", _parameter);
+    formData.append("user", cookies.username);
     axios
       .post(`http://ams.chmsc.edu.ph/api/upload.php`, formData, {
         headers: {
@@ -73,7 +76,7 @@ function Dropbox() {
 
   return (
     <div>
-      <Dialog open={isDropboxOpen} fullWidth={true}>
+      <Dialog open={isDropboxOpen} fullWidth={true} maxWidth="md">
         <DialogTitle
           sx={{
             display: "flex",
@@ -195,7 +198,6 @@ function Dropbox() {
       <DropboxModal
         isModalOpen={isModalOpen}
         handleModalClose={handleModalClose}
-        file={file}
       />
     </div>
   );

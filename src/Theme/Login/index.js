@@ -7,7 +7,7 @@ const loginTitle = {
   justifyContent: "center",
   textAlign: "center",
   lineHeight: "1",
-  height: "100vh",
+  mt: 2,
 };
 
 const loginForm = {

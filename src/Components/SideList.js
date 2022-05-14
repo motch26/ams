@@ -24,13 +24,9 @@ import {
 } from "@mui/icons-material";
 
 function SideList() {
-  const [isModalOpen, setModalOpen] = useState(false);
-  var { actions, areaNum, parameter, paramData } = useContext(Context);
-  const handleModalOpen = (file) => {
-    setModalOpen(true);
-    actions.setFile(file);
-  };
-  const handleModalClose = () => setModalOpen(false);
+  var { actions, program, areaNum, parameter, paramData, isPDFModalShown } =
+    useContext(Context);
+
   const closeList = () => actions.setSubShown(false);
 
   const systems = paramData["SYSTEMS"];
@@ -67,9 +63,9 @@ function SideList() {
 
   const checkIfCategory = (_category) => {
     const data = criteria["data"];
-    if (data[areaNum].hasOwnProperty(parameter))
-      if (data[areaNum][parameter].hasOwnProperty(_category))
-        return data[areaNum][parameter][_category];
+    if (data[program][areaNum].hasOwnProperty(parameter))
+      if (data[program][areaNum][parameter].hasOwnProperty(_category))
+        return data[program][areaNum][parameter][_category];
     return [];
   };
 
@@ -122,7 +118,13 @@ function SideList() {
                       return (
                         <div key={index}>
                           <ListItemButton
-                            onClick={() => handleModalOpen(_file)}
+                            onClick={() => {
+                              actions.setPDFModalShown(true);
+                              actions.setFile(_file);
+                              actions.setDirectory(
+                                `${program}/${areaNum}/${parameter}/SYSTEMS`
+                              );
+                            }}
                           >
                             <ListItemText
                               primary={_file}
@@ -162,7 +164,13 @@ function SideList() {
                       return (
                         <div key={index}>
                           <ListItemButton
-                            onClick={() => handleModalOpen(_file)}
+                            onClick={() => {
+                              actions.setPDFModalShown(true);
+                              actions.setFile(_file);
+                              actions.setDirectory(
+                                `${program}/${areaNum}/${parameter}/IMPLEMENTATION`
+                              );
+                            }}
                             key={index}
                           >
                             <ListItemText
@@ -203,7 +211,13 @@ function SideList() {
                       return (
                         <div key={index}>
                           <ListItemButton
-                            onClick={() => handleModalOpen(_file)}
+                            onClick={() => {
+                              actions.setPDFModalShown(true);
+                              actions.setFile(_file);
+                              actions.setDirectory(
+                                `${program}/${areaNum}/${parameter}/OUTCOMES`
+                              );
+                            }}
                             key={index}
                           >
                             <ListItemText
@@ -219,11 +233,28 @@ function SideList() {
                 </List>
               </AccordionDetails>
             </Accordion>
+            <Accordion>
+              <AccordionSummary expandIcon={<ExpandMoreIcon />}>
+                <Typography>Exhibit</Typography>
+              </AccordionSummary>
+              <AccordionDetails>
+                <List>
+                  <ListItemButton
+                    onClick={() => {
+                      actions.setPDFModalShown(true);
+                      actions.setFile("EXHIBIT");
+                      actions.setDirectory(
+                        `${program}/${areaNum}/${parameter}`
+                      );
+                    }}
+                  >
+                    <ListItemText primary="Exhibit" />
+                  </ListItemButton>
+                </List>
+              </AccordionDetails>
+            </Accordion>
           </Box>
-          <PDFModal
-            isModalOpen={isModalOpen}
-            handleModalClose={handleModalClose}
-          />
+          <PDFModal />
         </Box>
       </Container>
     </Grid>

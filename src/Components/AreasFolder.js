@@ -7,20 +7,36 @@ import {
   Typography,
   Grid,
   Divider,
+  Button,
+  Fab,
 } from "@mui/material";
-
+import AssessmentIcon from "@mui/icons-material/Assessment";
 import SideList from "./SideList";
+import PDFModal from "./PDFModal";
+import ProgramPerformance from "./ProgramPerformance";
 import { areaFolder } from "../Theme/Home";
 import Parameters from "./Parameters";
 import { Context } from "./../Context";
 
 function AreasFolder() {
-  const { programData, isSubShown, setSubShown } = useContext(Context);
+  const {
+    programData,
+    isSubShown,
+    isPerformanceShown,
+    setSubShown,
+    areaNum,
+    actions,
+  } = useContext(Context);
 
   return (
-    <Box sx={{ width: "90vw", mx: "auto" }}>
+    <Box sx={{ width: "90vw", mx: "auto", position: "relative" }}>
       <Grid container>
-        <Grid container item xs={isSubShown ? 8 : 12} rowSpacing={3}>
+        <Grid
+          container
+          item
+          xs={isSubShown || isPerformanceShown ? 8 : 12}
+          rowSpacing={3}
+        >
           {programData.map((area, index) => {
             const areaNumber = Object.keys(area)[0];
             const areaContent = area[areaNumber];
@@ -72,6 +88,21 @@ function AreasFolder() {
                       areaNumber={areaNumber}
                       areaContent={areaContent}
                     />
+                    <Button
+                      variant="contained"
+                      size="small"
+                      sx={{ width: "auto", display: "block", mt: 1 }}
+                      onClick={() => {
+                        actions.setPDFModalShown(true);
+                        actions.setFile("COMPLIANCE");
+                        actions.setAreaNum(areaNumber);
+                        actions.setParameter("");
+                        actions.setSubShown(false);
+                        actions.setDirectory(`${areaNumber}`);
+                      }}
+                    >
+                      Compliance Report
+                    </Button>
                   </CardContent>
                 </Card>
               </Grid>
@@ -79,6 +110,25 @@ function AreasFolder() {
           })}
         </Grid>
         {isSubShown ? <SideList /> : null}
+        {areaNum ? <PDFModal /> : null}
+        {isPerformanceShown ? (
+          <ProgramPerformance />
+        ) : (
+          <Fab
+            variant="extended"
+            size="medium"
+            sx={{ position: "fixed", bottom: 40, right: 40 }}
+            color="primary"
+            aria-label="add"
+            onClick={() => {
+              actions.setSubShown(false);
+              actions.setPerformanceShown(true);
+            }}
+          >
+            <AssessmentIcon sx={{ mr: 1 }} />
+            Program Performance Profile
+          </Fab>
+        )}
       </Grid>
     </Box>
   );

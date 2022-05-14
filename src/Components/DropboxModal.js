@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useContext } from "react";
 import { Document, Page } from "react-pdf/dist/esm/entry.webpack5";
 import { blue } from "@mui/material/colors";
 import ArrowLeftIcon from "@mui/icons-material/ArrowLeft";
@@ -14,7 +14,9 @@ import {
   IconButton,
 } from "@mui/material";
 import printJS from "print-js";
-function DropboxModal({ isModalOpen, handleModalClose, file }) {
+import { Context } from "./../Context";
+function DropboxModal({ isModalOpen, handleModalClose }) {
+  const { file, directory } = useContext(Context);
   const [numPages, setNumPages] = useState(0);
   const [pageNumber, setPageNumber] = useState(1);
   const [scale, setScale] = useState(1);
@@ -24,7 +26,13 @@ function DropboxModal({ isModalOpen, handleModalClose, file }) {
 
   const printPDF = () => printJS("pdf/sample.pdf");
   return (
-    <Modal open={isModalOpen} onClose={handleModalClose}>
+    <Modal
+      open={isModalOpen}
+      onClose={() => {
+        handleModalClose();
+        setPageNumber(1);
+      }}
+    >
       <Box
         sx={{
           position: "absolute",
@@ -52,7 +60,10 @@ function DropboxModal({ isModalOpen, handleModalClose, file }) {
           </Button>
         </Box>
         <Box sx={{ maxHeight: "80vh", minWidth: "500px", overflowY: "auto" }}>
-          <Document file="pdf/sample.pdf" onLoadSuccess={pdfLoaded}>
+          <Document
+            file={`uploads/${directory}/${file}`}
+            onLoadSuccess={pdfLoaded}
+          >
             <Page pageNumber={pageNumber} scale={scale} />
           </Document>
         </Box>

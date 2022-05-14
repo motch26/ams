@@ -11,6 +11,7 @@ import {
   Grid,
   Alert,
   Avatar,
+  Typography,
 } from "@mui/material";
 import { Lock } from "@mui/icons-material";
 import { blue, grey } from "@mui/material/colors";
@@ -42,8 +43,12 @@ function Login() {
         if (res.data) {
           const resUserID = res.data.id;
           const resIsAdmin = res.data.isAdmin;
+          const resUsername = res.data.username;
           setUserID(resUserID);
           setCookie("userID", resUserID, {
+            path: "/",
+          });
+          setCookie("username", resUsername, {
             path: "/",
           });
           setCookie("isAdmin", resIsAdmin, {
@@ -62,7 +67,22 @@ function Login() {
   return (
     <Grid container bgcolor={grey[50]}>
       <Grid item xs={4}>
-        <Box sx={loginTitle}> CHMSC Accreditation Management System</Box>
+        <Box
+          sx={{
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+            alignContent: "center",
+            justifyContent: "center",
+            height: "90vh",
+          }}
+        >
+          <img src="img/logo.png" alt="logo" width={140} height={140} />
+          <Typography sx={loginTitle}>
+            Carlos Hilado Memorial State University Accreditation Management
+            System
+          </Typography>
+        </Box>
       </Grid>
       <Grid item xs={8}>
         <Container fixed>

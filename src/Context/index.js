@@ -9,9 +9,13 @@ export const Provider = (props) => {
   const [parameter, setParameter] = useState("");
   const [paramData, setParamData] = useState(null);
   const [file, setFile] = useState("");
+  const [directory, setDirectory] = useState("");
 
   const [isSubShown, setSubShown] = useState(false);
+  const [isPDFModalShown, setPDFModalShown] = useState(false);
   const [isDropboxOpen, setDropboxOpen] = useState(false);
+  const [isLogsOpen, setLogsOpen] = useState(false);
+  const [isPerformanceShown, setPerformanceShown] = useState(false);
 
   const handleSetProgramData = (program) => {
     setProgramData(data[program]);
@@ -22,7 +26,11 @@ export const Provider = (props) => {
   const handleSetParameter = (parameter) => setParameter(parameter);
   const handleSetParamData = (paramData) => setParamData(paramData);
   const handleSetFile = (file) => setFile(file);
+  const handleSetDirectory = (directory) => setDirectory(directory);
   const handleSetDropboxOpen = (bool) => setDropboxOpen(bool);
+  const handleSetLogsOpen = (bool) => setLogsOpen(bool);
+  const handlePDFModalShown = (bool) => setPDFModalShown(bool);
+  const handleSetPerformanceShown = (bool) => setPerformanceShown(bool);
 
   return (
     <Context.Provider
@@ -34,7 +42,11 @@ export const Provider = (props) => {
         parameter,
         paramData,
         file,
+        directory,
         isDropboxOpen,
+        isPDFModalShown,
+        isLogsOpen,
+        isPerformanceShown,
         actions: {
           setProgramData: handleSetProgramData,
           setProgram: handleSetProgram,
@@ -43,7 +55,11 @@ export const Provider = (props) => {
           setParameter: handleSetParameter,
           setParamData: handleSetParamData,
           setFile: handleSetFile,
+          setDirectory: handleSetDirectory,
           setDropboxOpen: handleSetDropboxOpen,
+          setLogsOpen: handleSetLogsOpen,
+          setPDFModalShown: handlePDFModalShown,
+          setPerformanceShown: handleSetPerformanceShown,
         },
       }}
     >

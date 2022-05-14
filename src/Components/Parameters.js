@@ -9,6 +9,7 @@ function Parameters({ areaContent, areaNumber }) {
     actions.setAreaNum(areaNumber);
     actions.setParameter(parameter);
     actions.setParamData(paramData);
+    actions.setPerformanceShown(false);
   };
   return (
     <ButtonGroup variant="outlined" size="small" sx={{ flexWrap: "wrap" }}>
@@ -19,7 +20,9 @@ function Parameters({ areaContent, areaNumber }) {
         return (
           <Button
             key={index}
-            onClick={() => handleParamButton(parameter, paramData)}
+            onClick={() => {
+              handleParamButton(parameter, paramData);
+            }}
           >
             {paramLetter}
           </Button>

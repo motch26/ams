@@ -15,8 +15,9 @@ import {
 } from "@mui/material";
 import { blue } from "@mui/material/colors";
 
-function PDFModal({ isModalOpen, handleModalClose }) {
-  const { areaNum, parameter, file } = useContext(Context);
+function PDFModal() {
+  const { areaNum, parameter, file, directory, actions, isPDFModalShown } =
+    useContext(Context);
   const [numPages, setNumPages] = useState(0);
   const [pageNumber, setPageNumber] = useState(1);
   const [scale, setScale] = useState(1);
@@ -24,7 +25,13 @@ function PDFModal({ isModalOpen, handleModalClose }) {
   const pdfLoaded = ({ numPages }) => setNumPages(numPages);
   const handleScale = (delta) => setScale((prev) => (prev = prev + delta));
   return (
-    <Modal open={isModalOpen} onClose={handleModalClose}>
+    <Modal
+      open={isPDFModalShown}
+      onClose={() => {
+        actions.setPDFModalShown(false);
+        setPageNumber(1);
+      }}
+    >
       <Box
         sx={{
           position: "absolute",
@@ -46,12 +53,16 @@ function PDFModal({ isModalOpen, handleModalClose }) {
             alignItems: "center",
           }}
         >
-          <Typography variant="h6">{`Area ${areaNum.slice(
-            4
-          )} - P.${parameter.slice(-1)}. - ${file}`}</Typography>
+          <Typography variant="h6">{`Area ${areaNum.slice(4)} ${
+            parameter ? `- P.${parameter.slice(-1)}.` : ""
+          } - ${file}`}</Typography>
         </Box>
         <Box sx={{ maxHeight: "80vh", minWidth: "500px", overflowY: "auto" }}>
-          <Document file="pdf/sample.pdf" onLoadSuccess={pdfLoaded}>
+          <Document
+            file={`pdf/${directory}/${file}.pdf`}
+            onLoadSuccess={pdfLoaded}
+            error="No file attached in this section"
+          >
             <Page pageNumber={pageNumber} scale={scale} />
           </Document>
         </Box>

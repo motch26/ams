@@ -7,6 +7,7 @@ import FolderIcon from "@mui/icons-material/Folder";
 import InventoryIcon from "@mui/icons-material/Inventory";
 import { Context } from "./../Context";
 import Dropbox from "./Dropbox";
+import Logs from "./Logs";
 import {
   AppBar,
   Box,
@@ -19,13 +20,14 @@ import {
 } from "@mui/material";
 
 function MyAppBar() {
-  const { actions, program, isDropboxOpen } = useContext(Context);
+  const { actions, program, isDropboxOpen, isLogsOpen } = useContext(Context);
   const [isLoggedOut, setLogOut] = useState(false);
   const [cookies, setCookie, removeCookie] = useCookies(["userID", "isAdmin"]);
 
   const logout = () => {
     removeCookie("userID", { path: "/" });
-    removeCookie("userAdmin", { path: "/" });
+    removeCookie("isAdmin", { path: "/" });
+    removeCookie("username", { path: "/" });
     setLogOut(true);
   };
   const handleProgramChange = (e) => {
@@ -35,6 +37,7 @@ function MyAppBar() {
   };
 
   const handleDropbox = (bool) => actions.setDropboxOpen(bool);
+  const handleLogs = (bool) => actions.setLogsOpen(bool);
 
   const showHome = () => actions.setProgram("");
 
@@ -44,7 +47,8 @@ function MyAppBar() {
         <AppBar position="static">
           <Toolbar>
             <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-              CHMSC Accreditation Management System
+              Carlos Hilado Memorial State University | Accreditation Management
+              System
             </Typography>
 
             <Box
@@ -55,14 +59,19 @@ function MyAppBar() {
             >
               <FormControl
                 variant="standard"
+                size="small"
                 sx={{ minWidth: 150, borderRadius: 2, bgcolor: "white" }}
               >
                 <Select
                   value={program}
                   label="college"
+                  displayEmpty
                   onChange={handleProgramChange}
                   sx={{ p: 1, borderRadius: 5 }}
                 >
+                  <MenuItem disabled value="">
+                    Program
+                  </MenuItem>
                   <MenuItem value="BSIT">BSIT</MenuItem>
                   <MenuItem value="BSED">BSED</MenuItem>
                   <MenuItem value="BEED">BEED</MenuItem>
@@ -95,7 +104,7 @@ function MyAppBar() {
                   size="small"
                   sx={{ ml: 3 }}
                   startIcon={<FolderIcon />}
-                  onClick={() => handleDropbox(true)}
+                  onClick={() => handleLogs(true)}
                 >
                   Logs
                 </Button>
@@ -117,6 +126,7 @@ function MyAppBar() {
       </Box>
       {isLoggedOut ? <Navigate to="/" /> : null};
       {isDropboxOpen ? <Dropbox /> : null}
+      {isLogsOpen ? <Logs /> : null};
     </React.Fragment>
   );
 }
