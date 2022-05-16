@@ -1,6 +1,6 @@
 const loginTitle = {
   fontWeight: 800,
-  fontSize: { sm: 30, md: 60, lg: 80 },
+  fontSize: { sm: 30, md: 40, lg: 60 },
   color: "primary.dark",
   display: "flex",
   alignItems: "center",

@@ -77,11 +77,17 @@ function PDFModal() {
             Page {pageNumber} of {numPages}
           </Typography>
           <Box>
-            <IconButton onClick={() => handleScale(-0.5)}>
+            <IconButton
+              disabled={scale === 1.0 ? true : false}
+              onClick={() => handleScale(-0.5)}
+            >
               <ZoomOutIcon />
             </IconButton>
             {scale}
-            <IconButton onClick={() => handleScale(0.5)}>
+            <IconButton
+              disabled={scale === 2.0 ? true : false}
+              onClick={() => handleScale(0.5)}
+            >
               <ZoomInIcon />
             </IconButton>
           </Box>

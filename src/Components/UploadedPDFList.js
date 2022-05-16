@@ -9,6 +9,7 @@ import {
   Stack,
   Chip,
   Typography,
+  Divider,
 } from "@mui/material";
 
 export const UploadedPDFList = React.forwardRef(
@@ -28,39 +29,42 @@ export const UploadedPDFList = React.forwardRef(
                     row;
                   if (dateUpload === date) {
                     return (
-                      <ListItemButton
-                        onClick={() => {
-                          actions.setFile(fileName);
-                          actions.setDirectory(
-                            `${program}/${areaNum}/${parameter}`
-                          );
-                          handleModalOpen();
-                        }}
-                        sx={{
-                          display: "flex",
-                          justifyContent: "space-between",
-                        }}
-                        key={index}
-                      >
-                        {row.fileName}
-                        <Stack direction="row" spacing={2}>
-                          <Chip
-                            label={row.program}
-                            color="warning"
-                            size="small"
-                          />
-                          <Chip
-                            label={`Area ${row.areaNum.slice(-1)}`}
-                            color="warning"
-                            size="small"
-                          />
-                          <Chip
-                            label={`Parameter ${row.parameter.slice(-1)}`}
-                            color="warning"
-                            size="small"
-                          />
-                        </Stack>
-                      </ListItemButton>
+                      <>
+                        <ListItemButton
+                          onClick={() => {
+                            actions.setFile(fileName);
+                            actions.setDirectory(
+                              `${program}/${areaNum}/${parameter}`
+                            );
+                            handleModalOpen();
+                          }}
+                          sx={{
+                            display: "flex",
+                            justifyContent: "space-between",
+                          }}
+                          key={index}
+                        >
+                          {row.fileName}
+                          <Stack direction="row" spacing={2}>
+                            <Chip
+                              label={row.program}
+                              color="warning"
+                              size="small"
+                            />
+                            <Chip
+                              label={`Area ${row.areaNum.slice(-1)}`}
+                              color="warning"
+                              size="small"
+                            />
+                            <Chip
+                              label={`Parameter ${row.parameter.slice(-1)}`}
+                              color="warning"
+                              size="small"
+                            />
+                          </Stack>
+                        </ListItemButton>
+                        <Divider />
+                      </>
                     );
                   }
                 })}

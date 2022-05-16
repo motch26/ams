@@ -45,9 +45,7 @@ function ProgramPerformance() {
             </IconButton>
           </Box>
           <Box boxShadow={2}>
-            <Box
-              sx={{ maxHeight: "80vh", minWidth: "500px", overflowY: "auto" }}
-            >
+            <Box sx={{ maxHeight: "80vh", width: "auto", overflowY: "auto" }}>
               <Document
                 file="pdf/sample.pdf"
                 onLoadSuccess={pdfLoaded}
@@ -67,11 +65,17 @@ function ProgramPerformance() {
                 Page {pageNumber} of {numPages}
               </Typography>
               <Box>
-                <IconButton onClick={() => handleScale(-0.5)}>
+                <IconButton
+                  disabled={scale === 1.0 ? true : false}
+                  onClick={() => handleScale(-0.5)}
+                >
                   <ZoomOutIcon />
                 </IconButton>
                 {scale}
-                <IconButton onClick={() => handleScale(0.5)}>
+                <IconButton
+                  disabled={scale === 2.0 ? true : false}
+                  onClick={() => handleScale(0.5)}
+                >
                   <ZoomInIcon />
                 </IconButton>
               </Box>

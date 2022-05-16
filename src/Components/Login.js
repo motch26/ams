@@ -21,7 +21,7 @@ import { loginTitle, loginForm, loginButton } from "../Theme/Login";
 function Login() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const [cookies, setCookie] = useCookies(["userID", "isAdmin"]);
+  const [cookies, setCookie] = useCookies(["userID", "username", "isAdmin"]);
   const [userID, setUserID] = useState(null);
   const [isWarningVisble, setWarningVisible] = useState(false);
   const [isServerError, setServerError] = useState(false);

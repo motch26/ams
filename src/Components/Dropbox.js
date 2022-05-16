@@ -22,7 +22,7 @@ import { Context } from "./../Context";
 import DropboxContent from "./DropboxContent";
 import DropboxModal from "./DropboxModal";
 import UploadedPDF from "./UploadedPDF";
-import { orange, blue } from "@mui/material/colors";
+import { orange } from "@mui/material/colors";
 import paramJSON from "./../json/parameters.json";
 function Dropbox() {
   const { actions, file, isDropboxOpen } = useContext(Context);

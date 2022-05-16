@@ -4,6 +4,7 @@ import axios from "axios";
 
 import { Box, Button } from "@mui/material";
 import RefreshIcon from "@mui/icons-material/Refresh";
+import PrintIcon from "@mui/icons-material/Print";
 import { orange } from "@mui/material/colors";
 import { UploadedPDFList } from "./UploadedPDFList";
 function UploadedPDF({ handleModalOpen }) {
@@ -42,7 +43,7 @@ function UploadedPDF({ handleModalOpen }) {
         <Button
           variant="outlined"
           size="small"
-          startIcon={<RefreshIcon />}
+          startIcon={<PrintIcon />}
           sx={{
             alignSelf: "end",
             borderColor: orange[100],
